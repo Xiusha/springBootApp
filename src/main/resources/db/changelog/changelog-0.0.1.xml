@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	<changeSet id="1" author="xiusha" runAlways="false" runOnChange="false">
+		<createTable tableName="User">
+			<column name="id" type="long">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(250)">
+				<constraints unique="false" nullable="false" />
+			</column>
+			<column name="lastName" type="varchar(250)">
+				<constraints unique="false" nullable="false" />
+			</column>
+			<column name="email" type="varchar(250)">
+				<constraints unique="true" nullable="false" />
+			</column>
+			<column name="username" type="varchar(250)">
+				<constraints unique="true" nullable="false" />
+			</column>
+			<column name="password" type="varchar(1500)">
+				<constraints unique="true" nullable="false" />
+			</column>
+			<column name="status" type="varchar(1500)">
+				<constraints unique="true" nullable="false" />
+			</column>
+			<column name="age" type="integer">
+				<constraints unique="false" nullable="false" />
+			</column>
+			<column name="phone" type="varchar(1500)">
+				<constraints unique="true" nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="Address">
+			<column name="user_id" type="long">
+				<constraints nullable="false" />
+			</column>
+			<column name="street" type="varchar(250)">
+				<constraints unique="false" nullable="false" />
+			</column>
+			<column name="city" type="varchar(250)">
+				<constraints unique="false" nullable="false" />
+			</column>
+			<column name="zip" type="varchar(250)">
+				<constraints unique="false" nullable="false" />
+			</column>
+			<column name="country" type="varchar(250)">
+				<constraints unique="false" nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet id="2" author="xiusha">
+		<sql dbms="SQLite"
+			endDelimiter="\nGO"
+            splitStatements="true"
+            stripComments="true">ALTER TABLE Address
+		ADD CONSTRAINT FK_User FOREIGN KEY (user_id) REFERENCES User(id)
+	    </sql>
+	</changeSet>
+	<!-- <changeSet id="3" author="xiusha">
+		<insert tableName="User">
+	        <column name="id" valueNumeric="1"/>
+	        <column name="name" value="Oxana"/>
+	        <column name="lastName" value="Simon"/>
+	        <column name="email" value="bugaoxana05@gmail.com"/>
+	        <column name="username" value="xiusha"/>
+	        <column name="password" value="pswd"/>
+	        <column name="status" value="inactive"/>
+	        <column name="age" value="29"/>
+	        <column name="phone" value="0756288390"/>
+	    </insert>
+	    <insert tableName="Address">
+	        <column name="user_id" valueNumeric="1"/>
+	        <column name="street" value="street1"/>
+	        <column name="city" value="Iasi"/>
+	        <column name="zip" value="700000"/>
+	        <column name="country" value="Romania"/>
+	    </insert>
+	</changeSet> -->
+</databaseChangeLog>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+        
+        <changeSet id="make_some_user_columns_unique" author="xiusha" runAlways="false" runOnChange="false">
+        	<sql dbms="SQLite"
+				endDelimiter="\nGO"
+	            splitStatements="true"
+	            stripComments="true">ALTER TABLE User
+			ADD CONSTRAINT name_unique UNIQUE (email, username, password, phone)
+		    </sql>
+        </changeSet>
+        <changeSet id="create_role_table" author="xiusha" runAlways="false" runOnChange="false">
+        	<createTable tableName="Role">
+				<column name="user_id" type="long">
+					<constraints nullable="false" />
+				</column>
+				<column name="role_type" type="varchar(255)">
+					<constraints nullable="false" />
+				</column>
+			</createTable>
+        </changeSet>
+        <changeSet id="add_role_user_fk" author="xiusha" runAlways="false" runOnChange="false">
+        	<sql dbms="SQLite"
+				endDelimiter="\nGO"
+	            splitStatements="true"
+	            stripComments="true">ALTER TABLE Role
+			ADD CONSTRAINT FK_User FOREIGN KEY (user_id) REFERENCES User(id)
+		    </sql>
+        </changeSet>
+        <!-- <changeSet id="insert_into_role_table" author="xiusha">
+        	<insert tableName="Role">
+		        <column name="user_id" valueNumeric="1"/>
+		        <column name="role_type" value="ADMIN"/>
+		    </insert>
+        </changeSet> -->
+</databaseChangeLog>
